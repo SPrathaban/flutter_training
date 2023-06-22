@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
+  await dotenv.load(); // default fileName will be .env
   runApp(const MyApp());
 }
 
@@ -28,6 +30,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String backendUrl =
+      dotenv.env['BACKEND_URL'] ?? "https://api-dev.kingpin.global";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +39,10 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const Center(
-        child: Text("Hello World"),
+      body: Center(
+        child: Text(
+          'Environment Value of backend URL is $backendUrl',
+        ),
       ),
     );
   }
